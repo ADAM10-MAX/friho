@@ -146,6 +146,8 @@ nav a:hover {
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
   box-shadow: 0 8px 20px rgba(255,204,0,0.4);
   letter-spacing: 0.5px;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .center-button:hover {
@@ -278,25 +280,24 @@ nav a:hover {
 <!-- فيديو الخلفية مع fallback -->
 <video autoplay muted loop playsinline id="bg-video">
   <source src="download.mp4" type="video/mp4">
-  <!-- في حال عدم وجود الفيديو تظهر خلفية سوداء -->
 </video>
 
 <!-- HEADER -->
 <header>
   <h1>🏁 GARAGE</h1>
   <nav>
-    <a href="#" id="nav-home">االتسيجل</a>
-    <a href="https://adam10-max.github.io/friho/moto" id="nav-motogp">Moto GP</a>
-    <a href="seachre.html" id="nav-famous">الأكثر شهرة</a>
-    <a href="CAR.html" id="nav-car">Car Racing</a>
-    <a href="#" id="nav-contact">تواصل معنا</a>
+    <a href="index.html">الرئيسية</a>
+    <a href="moto.html">Moto GP</a>
+    <a href="searchre.html">الأكثر شهرة</a>
+    <a href="CAR.html">Car Racing</a>
+    <a href="#contact" id="nav-contact">تواصل معنا</a>
   </nav>
 </header>
 
 <!-- HERO -->
 <div class="hero">
   <h2>مرحبا بك في عالم السرعة 🏎️💨</h2>
-  <button href="searchre.html" class="center-button" id="exploreBtn">🚀 ابدأ استكشافك</button>
+  <a href="searchre.html" class="center-button" id="exploreBtn">🚀 ابدأ استكشافك</a>
 </div>
 
 <!-- رسالة منبثقة -->
@@ -304,8 +305,6 @@ nav a:hover {
 
 <script>
   (function() {
-    // زر الاستكشاف
-    const exploreBtn = document.getElementById('exploreBtn');
     const toast = document.getElementById('toastMsg');
     
     // دالة إظهار رسالة toast
@@ -317,64 +316,27 @@ nav a:hover {
       }, duration);
     }
     
-    // عند الضغط على زر الاستكشاف
-    if (exploreBtn) {
-      exploreBtn.addEventListener('click', function(e) {
+    // معالجة رابط "تواصل معنا" فقط
+    const contactLink = document.getElementById('nav-contact');
+    if (contactLink) {
+      contactLink.addEventListener('click', function(e) {
         e.preventDefault();
-        showMessage("🏎️ انطلق! استعد لتجربة فريدة من السرعة 🔥", 2200);
-        // يمكن إضافة أي إجراء آخر مثل التمرير أو فتح رابط
-        // مثلاً: smooth scroll إلى الأسفل لو أردنا
-        // لكن ليبقى تفاعلياً فقط
+        showMessage("📞 تواصل معنا على: info@garage.com أو عبر وسائل التواصل", 3000);
       });
     }
     
-    // معالجة الروابط في القائمة لإعطاء تجربة سلسة
-    const navLinks = document.querySelectorAll('nav a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        // استثناء رابط Car Racing الذي يوجه إلى CAR.html
-        if (this.getAttribute('href') === 'CAR.html') {
-          // نسمح بالانتقال العادي
-          return;
-        }
-        e.preventDefault();
-        let sectionName = this.innerText.trim();
-        let message = "";
-        switch (sectionName) {
-          case "الرئيسية":
-            message = "🏠 أنت في الصفحة الرئيسية، استمتع بالمحتوى الحصري";
-            break;
-          case "Moto GP":
-            message = "🏍️ Moto GP - أقوى سباقات الدراجات النارية قريباً!";
-            break;
-          case "الأكثر شهرة":
-            message = "⭐ قائمة السيارات والدراجات الأكثر شهرة في العالم";
-            break;
-          case "تواصل معنا":
-            message = "📞 تواصل معنا على: info@garage.com أو عبر وسائل التواصل";
-            break;
-          default:
-            message = "🔧 هذه الصفحة قيد التطوير، ترقب المزيد!";
-        }
-        showMessage(message, 2000);
-      });
-    });
-    
-    // تحسين عرض الفيديو على الأجهزة التي لا تدعم التشغيل التلقائي
+    // تحسين عرض الفيديو
     const video = document.getElementById('bg-video');
     if (video) {
       video.addEventListener('error', function() {
         console.log("فيديو غير موجود، الخلفية السوداء تعمل بشكل افتراضي");
-        // لا حاجة لإظهار خطأ للمستخدم
       });
-      // للتأكد من التشغيل على الهواتف
       video.play().catch(err => {
         console.log("Auto-play prevented: ", err);
-        // يمكن إضافة عنصر تحكم بسيط لكنه ليس ضرورياً
       });
     }
     
-    // إضافة تأثيرات إضافية لجعل التجربة أكثر حيوية عند مرور الماوس
+    // تأثير على العنوان الرئيسي
     const heroTitle = document.querySelector('.hero h2');
     if (heroTitle) {
       heroTitle.addEventListener('mouseenter', () => {
