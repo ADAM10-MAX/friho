@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiho garage</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* نفس CSS كـ car.html */
+body {font-family:'Cairo',sans-serif; background:#0a0a0a;color:white;margin:0;padding:0;}
+header{display:flex;justify-content:space-between;padding:20px 50px;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);}
+header h1{color:#ffcc00;}
+nav a{color:white;margin-left:20px;text-decoration:none;font-weight:bold;}
+nav a:hover{color:#ffcc00;}
+.hero{text-align:center;margin:50px 0;}
+.hero h2{font-size:50px;margin-bottom:20px;}
+.search-box{margin-top:20px;}
+.search-box input{padding:10px 20px;border-radius:30px;border:none;width:300px;}
+.search-box button{padding:10px 20px;border:none;border-radius:30px;background:linear-gradient(45deg,#ffcc00,#ff8800);color:black;cursor:pointer;}
+.cars{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;padding:40px;}
+.card{background:rgba(255,255,255,0.05);border-radius:15px;overflow:hidden;cursor:pointer;transition:0.3s;}
+.card:hover{transform:translateY(-10px);}
+.card img{width:100%;height:160px;object-fit:cover;}
+.card-content{padding:15px;}
+.popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:center;z-index:100;}
+.popup-content{background:#111;padding:20px;border-radius:15px;width:90%;max-width:500px;text-align:center;}
+.popup img{width:100%;border-radius:10px;margin-bottom:15px;}
+.close{margin-top:10px;padding:10px 20px;background:red;border:none;color:white;cursor:pointer;font-weight:bold;}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Fiho </h1>
+<nav>
+<a href=".">التسجيل</a>
+<a href="index.html">الريئيسي</a>
+</nav>
+</header>
+
+<div class="hero">
+<h2>Garage</h2>
+<div class="search-box">
+<input type="text" id="search" placeholder="ابحث عن حلم...">
+<button onclick="filterMotos()">بحث 🔍</button>
+</div>
+</div>
+
+<div class="cars" id="carsContainer"></div>
+
+<div class="popup" id="popup">
+<div class="popup-content">
+<img id="popupImg">
+<h2 id="popupTitle"></h2>
+<p id="popupDesc"></p>
+<button class="close" onclick="closePopup()">إغلاق</button>
+</div>
+</div>
+
+<script>
+let allMotos = [];
+
+async function loadMotos(){
+  const res = await fetch('/api/motos');
+  allMotos = await res.json();
+  displayMotos(allMotos);
+}
+
+function displayMotos(motos){
+  const container = document.getElementById('carsContainer');
+  container.innerHTML = '';
+  motos.forEach(m=>{
+    container.innerHTML += `
+      <div class="card" onclick='openPopup(${JSON.stringify(m)})'>
+        <img src="${m.image_url}">
+        <div class="card-content">
+          <h3>${m.name}</h3>
+          <p>${m.description}</p>
+        </div>
+      </div>`;
+  });
+}
+
+function filterMotos(){
+  const value = document.getElementById("search").value.toLowerCase();
+  const filtered = allMotos.filter(m=>m.name.toLowerCase().includes(value));
+  displayMotos(filtered);
+}
+
+function openPopup(item){
+  document.getElementById("popup").style.display = "flex";
+  document.getElementById("popupImg").src = item.image_url;
+  document.getElementById("popupTitle").innerText = item.name;
+  document.getElementById("popupDesc").innerText = item.description;
+}
+function closePopup(){
+  document.getElementById("popup").style.display = "none";
+}
+
+loadMotos();
+</script>
+
+</body>
+</html>
