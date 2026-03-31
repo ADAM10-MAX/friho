@@ -2,11 +2,11 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GARAGE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>GARAGE | عالم السرعة</title>
 
 <!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 * {
@@ -19,9 +19,11 @@
 body {
   color: white;
   overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
 }
 
-/* VIDEO BACKGROUND */
+/* VIDEO BACKGROUND - محسن للهاتف والحاسوب */
 #bg-video {
   position: fixed;
   top: 0;
@@ -29,34 +31,60 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
-  filter: brightness(0.5);
+  z-index: -2;
+  filter: brightness(0.45) contrast(1.1);
 }
 
-/* HEADER */
+/* overlay داكن إضافي لضمان وضوح النص */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: -1;
+}
+
+/* HEADER - متجاوب */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 60px;
-  backdrop-filter: blur(10px);
-  background: rgba(0,0,0,0.5);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 15px 5%;
+  backdrop-filter: blur(12px);
+  background: rgba(0,0,0,0.6);
+  border-bottom: 1px solid rgba(255,204,0,0.3);
+  flex-wrap: wrap;
+  gap: 15px;
+  position: relative;
+  z-index: 10;
 }
 
 header h1 {
   color: #ffcc00;
-  font-size: 30px;
-  letter-spacing: 2px;
+  font-size: clamp(24px, 5vw, 32px);
+  letter-spacing: 1px;
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(255,204,0,0.5);
+}
+
+/* NAV - قائمة مرنة */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 nav a {
-  color: white;
-  margin-left: 25px;
+  color: #f0f0f0;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: clamp(14px, 4vw, 18px);
+  padding: 5px 0;
   position: relative;
   transition: 0.3s;
+  white-space: nowrap;
 }
 
 nav a::after {
@@ -66,8 +94,8 @@ nav a::after {
   height: 2px;
   background: #ffcc00;
   left: 0;
-  bottom: -5px;
-  transition: 0.3s;
+  bottom: -3px;
+  transition: 0.3s ease;
 }
 
 nav a:hover::after {
@@ -76,81 +104,288 @@ nav a:hover::after {
 
 nav a:hover {
   color: #ffcc00;
+  transform: translateY(-1px);
 }
 
-/* CENTER CONTENT */
+/* HERO SECTION - محور الصفحة */
 .hero {
-  height: 100vh;
+  min-height: calc(100vh - 80px);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
+  padding: 20px;
+  position: relative;
+  z-index: 5;
 }
 
-/* BUTTON */
+/* عنوان رئيسي */
+.hero h2 {
+  font-size: clamp(28px, 7vw, 58px);
+  font-weight: 800;
+  margin-bottom: 25px;
+  text-shadow: 0 0 25px rgba(0,0,0,0.7), 2px 2px 4px rgba(0,0,0,0.5);
+  background: linear-gradient(135deg, #ffffff, #ffdd99);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+}
+
+/* زر مميز */
 .center-button {
-  background: linear-gradient(45deg, #ffcc00, #ff8800);
+  background: linear-gradient(135deg, #ffcc00, #ff8800);
   border: none;
-  padding: 18px 45px;
-  border-radius: 50px;
-  font-size: 20px;
-  color: black;
+  padding: 14px 38px;
+  border-radius: 60px;
+  font-size: clamp(16px, 5vw, 22px);
+  font-weight: 800;
+  color: #1a1a2e;
   cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-  box-shadow: 0 0 20px rgba(255,204,0,0.6);
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  box-shadow: 0 8px 20px rgba(255,204,0,0.4);
+  letter-spacing: 0.5px;
 }
 
 .center-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 40px rgba(255,204,0,1);
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(255,204,0,0.7);
+  background: linear-gradient(135deg, #ffdd44, #ff9900);
 }
 
-/* TITLE */
-.hero h2 {
-  font-size: 50px;
-  margin-bottom: 20px;
-  text-shadow: 0 0 20px rgba(255,255,255,0.5);
+.center-button:active {
+  transform: scale(0.98);
 }
 
-/* ANIMATION */
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(20px);}
-  to {opacity: 1; transform: translateY(0);}
+/* رسالة ترحيب منبثقة (Toast) */
+.toast-message {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  color: #ffcc00;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 16px;
+  border: 1px solid rgba(255,204,0,0.5);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: 'Cairo', sans-serif;
+}
+
+.toast-message.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* تحسين أداء الفيديو على الهواتف */
+@media (max-width: 768px) {
+  header {
+    padding: 12px 5%;
+    justify-content: center;
+  }
+  
+  nav {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  nav a {
+    padding: 5px 8px;
+    white-space: nowrap;
+  }
+  
+  .hero {
+    min-height: calc(100vh - 110px);
+  }
+  
+  .center-button {
+    padding: 12px 30px;
+  }
+  
+  .toast-message {
+    font-size: 14px;
+    padding: 8px 20px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  nav a {
+    font-size: 12px;
+  }
+  
+  .hero h2 {
+    margin-bottom: 20px;
+  }
+}
+
+/* رسوم متحركة */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero h2, .center-button {
-  animation: fadeIn 1.5s ease;
+  animation: fadeInUp 0.9s ease forwards;
 }
 
+.hero h2 {
+  animation-delay: 0.1s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.center-button {
+  animation-delay: 0.3s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+/* تخصيص شريط التمرير */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffcc00;
+  border-radius: 10px;
+}
 </style>
 </head>
-
 <body>
 
-<!-- VIDEO -->
-<video autoplay muted loop id="bg-video">
+<div class="overlay"></div>
+
+<!-- فيديو الخلفية مع fallback -->
+<video autoplay muted loop playsinline id="bg-video">
   <source src="download.mp4" type="video/mp4">
+  <!-- في حال عدم وجود الفيديو تظهر خلفية سوداء -->
 </video>
 
 <!-- HEADER -->
 <header>
-  <h1>GARAGE</h1>
+  <h1>🏁 GARAGE</h1>
   <nav>
-    <a href="#">الرئيسية</a>
-    <a href="#">Moto GP</a>
-    <a href="#">الأكثر شهرة</a>
-    <a href="CAR.html">Car Racing</a>
-    <a href="#">تواصل معنا</a>
+    <a href="#" id="nav-home">الرئيسية</a>
+    <a href="#" id="nav-motogp">Moto GP</a>
+    <a href="#" id="nav-famous">الأكثر شهرة</a>
+    <a href="CAR.html" id="nav-car">Car Racing</a>
+    <a href="#" id="nav-contact">تواصل معنا</a>
   </nav>
 </header>
 
 <!-- HERO -->
 <div class="hero">
-  <h2>مرحبا بك في عالم السرعة </h2>
-  <button class="center-button">ابدأ استكشافك</button>
+  <h2>مرحبا بك في عالم السرعة 🏎️💨</h2>
+  <button class="center-button" id="exploreBtn">🚀 ابدأ استكشافك</button>
 </div>
 
+<!-- رسالة منبثقة -->
+<div id="toastMsg" class="toast-message">✨ جاهز للانطلاق إلى عالم الإثارة ✨</div>
+
+<script>
+  (function() {
+    // زر الاستكشاف
+    const exploreBtn = document.getElementById('exploreBtn');
+    const toast = document.getElementById('toastMsg');
+    
+    // دالة إظهار رسالة toast
+    function showMessage(text, duration = 2000) {
+      toast.textContent = text || "✨ جاهز للانطلاق إلى عالم الإثارة ✨";
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, duration);
+    }
+    
+    // عند الضغط على زر الاستكشاف
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        showMessage("🏎️ انطلق! استعد لتجربة فريدة من السرعة 🔥", 2200);
+        // يمكن إضافة أي إجراء آخر مثل التمرير أو فتح رابط
+        // مثلاً: smooth scroll إلى الأسفل لو أردنا
+        // لكن ليبقى تفاعلياً فقط
+      });
+    }
+    
+    // معالجة الروابط في القائمة لإعطاء تجربة سلسة
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        // استثناء رابط Car Racing الذي يوجه إلى CAR.html
+        if (this.getAttribute('href') === 'CAR.html') {
+          // نسمح بالانتقال العادي
+          return;
+        }
+        e.preventDefault();
+        let sectionName = this.innerText.trim();
+        let message = "";
+        switch (sectionName) {
+          case "الرئيسية":
+            message = "🏠 أنت في الصفحة الرئيسية، استمتع بالمحتوى الحصري";
+            break;
+          case "Moto GP":
+            message = "🏍️ Moto GP - أقوى سباقات الدراجات النارية قريباً!";
+            break;
+          case "الأكثر شهرة":
+            message = "⭐ قائمة السيارات والدراجات الأكثر شهرة في العالم";
+            break;
+          case "تواصل معنا":
+            message = "📞 تواصل معنا على: info@garage.com أو عبر وسائل التواصل";
+            break;
+          default:
+            message = "🔧 هذه الصفحة قيد التطوير، ترقب المزيد!";
+        }
+        showMessage(message, 2000);
+      });
+    });
+    
+    // تحسين عرض الفيديو على الأجهزة التي لا تدعم التشغيل التلقائي
+    const video = document.getElementById('bg-video');
+    if (video) {
+      video.addEventListener('error', function() {
+        console.log("فيديو غير موجود، الخلفية السوداء تعمل بشكل افتراضي");
+        // لا حاجة لإظهار خطأ للمستخدم
+      });
+      // للتأكد من التشغيل على الهواتف
+      video.play().catch(err => {
+        console.log("Auto-play prevented: ", err);
+        // يمكن إضافة عنصر تحكم بسيط لكنه ليس ضرورياً
+      });
+    }
+    
+    // إضافة تأثيرات إضافية لجعل التجربة أكثر حيوية عند مرور الماوس
+    const heroTitle = document.querySelector('.hero h2');
+    if (heroTitle) {
+      heroTitle.addEventListener('mouseenter', () => {
+        heroTitle.style.transition = '0.2s';
+        heroTitle.style.textShadow = '0 0 15px rgba(255,204,0,0.8)';
+      });
+      heroTitle.addEventListener('mouseleave', () => {
+        heroTitle.style.textShadow = '0 0 25px rgba(0,0,0,0.7)';
+      });
+    }
+  })();
+</script>
 </body>
 </html>
